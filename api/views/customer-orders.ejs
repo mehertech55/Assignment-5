@@ -1,0 +1,106 @@
+<html lang="en">
+<head>
+    <title>Customer List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/animate.css">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/select2.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/perfect-scrollbar.css">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/util.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+</head>
+
+<body>
+<div class="limiter">
+    <div class="container-table100">
+        <div class="wrap-table100">
+            <% var customerDetails = JSON.parse(JSON.stringify(customer)) %>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Customer List</a></li>
+                    <li class="breadcrumb-item"><a href="/customers/<%= customerDetails.id %>">Customer Details</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Customer Orders</li>
+                </ol>
+            </nav>
+            <div class="card">
+                <div class="card-header">
+                    <h5>Customer ID: <%= customerDetails.id %></h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="card-text"><strong>Customer Name:</strong> <%= customerDetails.first %> <%= customerDetails.last %></p>
+                            <p class="card-text"><strong>Customer Email:</strong> <%= customerDetails.email %></p>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-sm-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col"><strong>Order Number</strong></th>
+                                    <th scope="col"><strong>Order Date</strong></th>
+                                    <th scope="col"><strong>Product Name</strong></th>
+                                    <th scope="col"><strong>Product Price</strong></th>
+                                    <th scope="col"><strong>Order Status</strong></th>
+                                    <th scope="col"><strong>Actions</strong></th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <% for(var i=0; i < customerDetails.orders.length; i++) { %>
+                                    <tr>
+                                        <th scope="row"><%= customerDetails.orders[i].number %></th>
+                                        <td><%= customerDetails.orders[i].date %></td>
+                                        <td><%= customerDetails.orders[i].product_name %></td>
+                                        <td>$<%= customerDetails.orders[i].price %></td>
+                                        <td><%= customerDetails.orders[i].status %></td>
+                                        <td><a class="btn btn-sm btn-primary" href="/customers/<%= customerDetails.id %>/orders/<%= customerDetails.orders[i].number %>">View Detail</a></td>
+                                    </tr>
+                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12" style="margin-top: 20px;">
+                            <a class="btn btn-sm btn-danger" href="/customers/<%= customerDetails.id %>">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/javascripts/jquery-3.2.1.min.js"></script>
+
+<script src="/javascripts/popper.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+
+<script src="/javascripts/select2.min.js"></script>
+
+<script src="/javascripts/perfect-scrollbar.min.js"></script>
+
+<script>
+    $('.js-pscroll').each(function(){
+        var ps = new PerfectScrollbar(this);
+
+        $(window).on('resize', function(){
+            ps.update();
+        })
+    });
+</script>
+
+<script src="/javascripts/main.js"></script>
+</body>
+</html>
